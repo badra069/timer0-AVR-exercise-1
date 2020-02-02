@@ -3,27 +3,27 @@ timers_exercise2.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000748  00000000  00000000  00000094  2**1
+  0 .text         0000073e  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000008  00800060  00000748  000007dc  2**0
+  1 .data         00000008  00800060  0000073e  000007d2  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          0000000c  00800068  00800068  000007e4  2**0
+  2 .bss          0000000c  00800068  00800068  000007da  2**0
                   ALLOC
-  3 .stab         000012c0  00000000  00000000  000007e4  2**2
+  3 .stab         000012b4  00000000  00000000  000007dc  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      000014c5  00000000  00000000  00001aa4  2**0
+  4 .stabstr      000014c5  00000000  00000000  00001a90  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      00000011  00000000  00000000  00002f69  2**0
+  5 .comment      00000011  00000000  00000000  00002f55  2**0
                   CONTENTS, READONLY
-  6 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00002f7c  2**2
+  6 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00002f68  2**2
                   CONTENTS, READONLY
-  7 .debug_info   0000052e  00000000  00000000  00002fb8  2**0
+  7 .debug_info   0000052e  00000000  00000000  00002fa4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 000004e7  00000000  00000000  000034e6  2**0
+  8 .debug_abbrev 000004e7  00000000  00000000  000034d2  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   0000001a  00000000  00000000  000039cd  2**0
+  9 .debug_line   0000001a  00000000  00000000  000039b9  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000001af  00000000  00000000  000039e7  2**0
+ 10 .debug_str    000001af  00000000  00000000  000039d3  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -37,7 +37,7 @@ Disassembly of section .text:
   14:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   18:	0c 94 2f 03 	jmp	0x65e	; 0x65e <__vector_6>
   1c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
-  20:	0c 94 6b 03 	jmp	0x6d6	; 0x6d6 <__vector_8>
+  20:	0c 94 66 03 	jmp	0x6cc	; 0x6cc <__vector_8>
   24:	0c 94 13 02 	jmp	0x426	; 0x426 <__vector_9>
   28:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   2c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
@@ -63,7 +63,7 @@ Disassembly of section .text:
   60:	10 e0       	ldi	r17, 0x00	; 0
   62:	a0 e6       	ldi	r26, 0x60	; 96
   64:	b0 e0       	ldi	r27, 0x00	; 0
-  66:	e8 e4       	ldi	r30, 0x48	; 72
+  66:	ee e3       	ldi	r30, 0x3E	; 62
   68:	f7 e0       	ldi	r31, 0x07	; 7
   6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
   6c:	05 90       	lpm	r0, Z+
@@ -86,7 +86,7 @@ Disassembly of section .text:
   82:	b2 07       	cpc	r27, r18
   84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
   86:	0e 94 a7 00 	call	0x14e	; 0x14e <main>
-  8a:	0c 94 a2 03 	jmp	0x744	; 0x744 <_exit>
+  8a:	0c 94 9d 03 	jmp	0x73a	; 0x73a <_exit>
 
 0000008e <__bad_interrupt>:
   8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -1061,110 +1061,104 @@ ISR(TIMER1_COMPA_vect)
  684:	df 93       	push	r29
  686:	cd b7       	in	r28, 0x3d	; 61
  688:	de b7       	in	r29, 0x3e	; 62
-	TCNT1 = 0;
- 68a:	8c e4       	ldi	r24, 0x4C	; 76
- 68c:	90 e0       	ldi	r25, 0x00	; 0
- 68e:	fc 01       	movw	r30, r24
- 690:	11 82       	std	Z+1, r1	; 0x01
- 692:	10 82       	st	Z, r1
 	/* the corresponding interrupt service routine function (IF EXIST) will be executed*/
 	if(g_T1CompareInterruptFunc_ptr != NULL)
- 694:	80 91 6e 00 	lds	r24, 0x006E	; 0x80006e <g_T1CompareInterruptFunc_ptr>
- 698:	90 91 6f 00 	lds	r25, 0x006F	; 0x80006f <g_T1CompareInterruptFunc_ptr+0x1>
- 69c:	89 2b       	or	r24, r25
- 69e:	31 f0       	breq	.+12     	; 0x6ac <__vector_6+0x4e>
+ 68a:	80 91 6e 00 	lds	r24, 0x006E	; 0x80006e <g_T1CompareInterruptFunc_ptr>
+ 68e:	90 91 6f 00 	lds	r25, 0x006F	; 0x80006f <g_T1CompareInterruptFunc_ptr+0x1>
+ 692:	89 2b       	or	r24, r25
+ 694:	31 f0       	breq	.+12     	; 0x6a2 <__vector_6+0x44>
 	{
 		g_T1CompareInterruptFunc_ptr();
- 6a0:	80 91 6e 00 	lds	r24, 0x006E	; 0x80006e <g_T1CompareInterruptFunc_ptr>
- 6a4:	90 91 6f 00 	lds	r25, 0x006F	; 0x80006f <g_T1CompareInterruptFunc_ptr+0x1>
- 6a8:	fc 01       	movw	r30, r24
- 6aa:	09 95       	icall
+ 696:	80 91 6e 00 	lds	r24, 0x006E	; 0x80006e <g_T1CompareInterruptFunc_ptr>
+ 69a:	90 91 6f 00 	lds	r25, 0x006F	; 0x80006f <g_T1CompareInterruptFunc_ptr+0x1>
+ 69e:	fc 01       	movw	r30, r24
+ 6a0:	09 95       	icall
 	}
 }
- 6ac:	00 00       	nop
- 6ae:	df 91       	pop	r29
- 6b0:	cf 91       	pop	r28
- 6b2:	ff 91       	pop	r31
- 6b4:	ef 91       	pop	r30
- 6b6:	bf 91       	pop	r27
- 6b8:	af 91       	pop	r26
- 6ba:	9f 91       	pop	r25
- 6bc:	8f 91       	pop	r24
- 6be:	7f 91       	pop	r23
- 6c0:	6f 91       	pop	r22
- 6c2:	5f 91       	pop	r21
- 6c4:	4f 91       	pop	r20
- 6c6:	3f 91       	pop	r19
- 6c8:	2f 91       	pop	r18
- 6ca:	0f 90       	pop	r0
- 6cc:	00 92 5f 00 	sts	0x005F, r0	; 0x80005f <__TEXT_REGION_LENGTH__+0x7e005f>
- 6d0:	0f 90       	pop	r0
- 6d2:	1f 90       	pop	r1
- 6d4:	18 95       	reti
+ 6a2:	00 00       	nop
+ 6a4:	df 91       	pop	r29
+ 6a6:	cf 91       	pop	r28
+ 6a8:	ff 91       	pop	r31
+ 6aa:	ef 91       	pop	r30
+ 6ac:	bf 91       	pop	r27
+ 6ae:	af 91       	pop	r26
+ 6b0:	9f 91       	pop	r25
+ 6b2:	8f 91       	pop	r24
+ 6b4:	7f 91       	pop	r23
+ 6b6:	6f 91       	pop	r22
+ 6b8:	5f 91       	pop	r21
+ 6ba:	4f 91       	pop	r20
+ 6bc:	3f 91       	pop	r19
+ 6be:	2f 91       	pop	r18
+ 6c0:	0f 90       	pop	r0
+ 6c2:	00 92 5f 00 	sts	0x005F, r0	; 0x80005f <__TEXT_REGION_LENGTH__+0x7e005f>
+ 6c6:	0f 90       	pop	r0
+ 6c8:	1f 90       	pop	r1
+ 6ca:	18 95       	reti
 
-000006d6 <__vector_8>:
+000006cc <__vector_8>:
 
 
 ISR(TIMER1_OVF_vect)
 {
- 6d6:	1f 92       	push	r1
- 6d8:	0f 92       	push	r0
- 6da:	00 90 5f 00 	lds	r0, 0x005F	; 0x80005f <__TEXT_REGION_LENGTH__+0x7e005f>
- 6de:	0f 92       	push	r0
- 6e0:	11 24       	eor	r1, r1
- 6e2:	2f 93       	push	r18
- 6e4:	3f 93       	push	r19
- 6e6:	4f 93       	push	r20
- 6e8:	5f 93       	push	r21
- 6ea:	6f 93       	push	r22
- 6ec:	7f 93       	push	r23
- 6ee:	8f 93       	push	r24
- 6f0:	9f 93       	push	r25
- 6f2:	af 93       	push	r26
- 6f4:	bf 93       	push	r27
- 6f6:	ef 93       	push	r30
- 6f8:	ff 93       	push	r31
- 6fa:	cf 93       	push	r28
- 6fc:	df 93       	push	r29
- 6fe:	cd b7       	in	r28, 0x3d	; 61
- 700:	de b7       	in	r29, 0x3e	; 62
+ 6cc:	1f 92       	push	r1
+ 6ce:	0f 92       	push	r0
+ 6d0:	00 90 5f 00 	lds	r0, 0x005F	; 0x80005f <__TEXT_REGION_LENGTH__+0x7e005f>
+ 6d4:	0f 92       	push	r0
+ 6d6:	11 24       	eor	r1, r1
+ 6d8:	2f 93       	push	r18
+ 6da:	3f 93       	push	r19
+ 6dc:	4f 93       	push	r20
+ 6de:	5f 93       	push	r21
+ 6e0:	6f 93       	push	r22
+ 6e2:	7f 93       	push	r23
+ 6e4:	8f 93       	push	r24
+ 6e6:	9f 93       	push	r25
+ 6e8:	af 93       	push	r26
+ 6ea:	bf 93       	push	r27
+ 6ec:	ef 93       	push	r30
+ 6ee:	ff 93       	push	r31
+ 6f0:	cf 93       	push	r28
+ 6f2:	df 93       	push	r29
+ 6f4:	cd b7       	in	r28, 0x3d	; 61
+ 6f6:	de b7       	in	r29, 0x3e	; 62
 	/* the corresponding interrupt service routine function (IF EXIST) will be executed*/
 	if(g_T1OverflowInterruptFunc_ptr != NULL)
- 702:	80 91 70 00 	lds	r24, 0x0070	; 0x800070 <g_T1OverflowInterruptFunc_ptr>
- 706:	90 91 71 00 	lds	r25, 0x0071	; 0x800071 <g_T1OverflowInterruptFunc_ptr+0x1>
- 70a:	89 2b       	or	r24, r25
- 70c:	31 f0       	breq	.+12     	; 0x71a <__vector_8+0x44>
+ 6f8:	80 91 70 00 	lds	r24, 0x0070	; 0x800070 <g_T1OverflowInterruptFunc_ptr>
+ 6fc:	90 91 71 00 	lds	r25, 0x0071	; 0x800071 <g_T1OverflowInterruptFunc_ptr+0x1>
+ 700:	89 2b       	or	r24, r25
+ 702:	31 f0       	breq	.+12     	; 0x710 <__vector_8+0x44>
 	{
 		g_T1OverflowInterruptFunc_ptr();
- 70e:	80 91 70 00 	lds	r24, 0x0070	; 0x800070 <g_T1OverflowInterruptFunc_ptr>
- 712:	90 91 71 00 	lds	r25, 0x0071	; 0x800071 <g_T1OverflowInterruptFunc_ptr+0x1>
- 716:	fc 01       	movw	r30, r24
- 718:	09 95       	icall
+ 704:	80 91 70 00 	lds	r24, 0x0070	; 0x800070 <g_T1OverflowInterruptFunc_ptr>
+ 708:	90 91 71 00 	lds	r25, 0x0071	; 0x800071 <g_T1OverflowInterruptFunc_ptr+0x1>
+ 70c:	fc 01       	movw	r30, r24
+ 70e:	09 95       	icall
 	}
 }
- 71a:	00 00       	nop
- 71c:	df 91       	pop	r29
- 71e:	cf 91       	pop	r28
- 720:	ff 91       	pop	r31
- 722:	ef 91       	pop	r30
- 724:	bf 91       	pop	r27
- 726:	af 91       	pop	r26
- 728:	9f 91       	pop	r25
- 72a:	8f 91       	pop	r24
- 72c:	7f 91       	pop	r23
- 72e:	6f 91       	pop	r22
- 730:	5f 91       	pop	r21
- 732:	4f 91       	pop	r20
- 734:	3f 91       	pop	r19
- 736:	2f 91       	pop	r18
- 738:	0f 90       	pop	r0
- 73a:	00 92 5f 00 	sts	0x005F, r0	; 0x80005f <__TEXT_REGION_LENGTH__+0x7e005f>
- 73e:	0f 90       	pop	r0
- 740:	1f 90       	pop	r1
- 742:	18 95       	reti
+ 710:	00 00       	nop
+ 712:	df 91       	pop	r29
+ 714:	cf 91       	pop	r28
+ 716:	ff 91       	pop	r31
+ 718:	ef 91       	pop	r30
+ 71a:	bf 91       	pop	r27
+ 71c:	af 91       	pop	r26
+ 71e:	9f 91       	pop	r25
+ 720:	8f 91       	pop	r24
+ 722:	7f 91       	pop	r23
+ 724:	6f 91       	pop	r22
+ 726:	5f 91       	pop	r21
+ 728:	4f 91       	pop	r20
+ 72a:	3f 91       	pop	r19
+ 72c:	2f 91       	pop	r18
+ 72e:	0f 90       	pop	r0
+ 730:	00 92 5f 00 	sts	0x005F, r0	; 0x80005f <__TEXT_REGION_LENGTH__+0x7e005f>
+ 734:	0f 90       	pop	r0
+ 736:	1f 90       	pop	r1
+ 738:	18 95       	reti
 
-00000744 <_exit>:
- 744:	f8 94       	cli
+0000073a <_exit>:
+ 73a:	f8 94       	cli
 
-00000746 <__stop_program>:
- 746:	ff cf       	rjmp	.-2      	; 0x746 <__stop_program>
+0000073c <__stop_program>:
+ 73c:	ff cf       	rjmp	.-2      	; 0x73c <__stop_program>

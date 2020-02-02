@@ -5,12 +5,7 @@ Archive member included to satisfy reference by file (symbol)
 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
                               ./Application.o (__do_copy_data)
 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
-                              ./Application.o (__do_clear_bss)
-
-Allocating common symbols
-Common symbol       size              file
-
-DELAY_DONE          0x1               ./Application.o
+                              ./Timer0.o (__do_clear_bss)
 
 Memory Configuration
 
@@ -29,7 +24,6 @@ Linker script and memory map
 LOAD /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/crtatmega16.o
 LOAD ./Application.o
 LOAD ./Timer0.o
-LOAD ./timer1.o
 START GROUP
 LOAD /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a
 LOAD /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/libm.a
@@ -134,7 +128,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x0000000000000000      0x748
+.text           0x0000000000000000      0x416
  *(.vectors)
  .vectors       0x0000000000000000       0x54 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/crtatmega16.o
                 0x0000000000000000                __vectors
@@ -196,6 +190,7 @@ END GROUP
                 0x000000000000008e                __vector_1
                 0x000000000000008e                __vector_12
                 0x000000000000008e                __bad_interrupt
+                0x000000000000008e                __vector_6
                 0x000000000000008e                __vector_3
                 0x000000000000008e                __vector_11
                 0x000000000000008e                __vector_13
@@ -205,6 +200,7 @@ END GROUP
                 0x000000000000008e                __vector_4
                 0x000000000000008e                __vector_2
                 0x000000000000008e                __vector_15
+                0x000000000000008e                __vector_8
                 0x000000000000008e                __vector_14
                 0x000000000000008e                __vector_10
                 0x000000000000008e                __vector_16
@@ -212,114 +208,83 @@ END GROUP
                 0x000000000000008e                __vector_20
  .text          0x0000000000000092        0x0 ./Application.o
  .text          0x0000000000000092        0x0 ./Timer0.o
- .text          0x0000000000000092        0x0 ./timer1.o
  .text          0x0000000000000092        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
  .text          0x0000000000000092        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
  .text          0x0000000000000092        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
                 0x0000000000000092                . = ALIGN (0x2)
  *(.text.*)
- .text.toggle   0x0000000000000092       0x34 ./Application.o
+ .text.toggle   0x0000000000000092       0x24 ./Application.o
                 0x0000000000000092                toggle
- .text.TIMER0_delay_init
-                0x00000000000000c6       0x4c ./Application.o
-                0x00000000000000c6                TIMER0_delay_init
- .text.TIMER0_delay
-                0x0000000000000112       0x3c ./Application.o
-                0x0000000000000112                TIMER0_delay
- .text.main     0x000000000000014e       0x56 ./Application.o
-                0x000000000000014e                main
+ .text.main     0x00000000000000b6       0x6a ./Application.o
+                0x00000000000000b6                main
  .text.TIMER0_setCallBackCompareMode
-                0x00000000000001a4       0x26 ./Timer0.o
-                0x00000000000001a4                TIMER0_setCallBackCompareMode
+                0x0000000000000120       0x26 ./Timer0.o
+                0x0000000000000120                TIMER0_setCallBackCompareMode
  .text.TIMER0_setCallBackOverflowMode
-                0x00000000000001ca       0x26 ./Timer0.o
-                0x00000000000001ca                TIMER0_setCallBackOverflowMode
+                0x0000000000000146       0x26 ./Timer0.o
+                0x0000000000000146                TIMER0_setCallBackOverflowMode
  .text.TIMER0_init
-                0x00000000000001f0      0x130 ./Timer0.o
-                0x00000000000001f0                TIMER0_init
+                0x000000000000016c      0x128 ./Timer0.o
+                0x000000000000016c                TIMER0_init
  .text.TIMER0_start
-                0x0000000000000320       0x32 ./Timer0.o
-                0x0000000000000320                TIMER0_start
+                0x0000000000000294       0x32 ./Timer0.o
+                0x0000000000000294                TIMER0_start
  .text.TIMER0_setCompareValue
-                0x0000000000000352       0x20 ./Timer0.o
-                0x0000000000000352                TIMER0_setCompareValue
+                0x00000000000002c6       0x20 ./Timer0.o
+                0x00000000000002c6                TIMER0_setCompareValue
  .text.TIMER0_stop
-                0x0000000000000372       0x46 ./Timer0.o
-                0x0000000000000372                TIMER0_stop
+                0x00000000000002e6       0x46 ./Timer0.o
+                0x00000000000002e6                TIMER0_stop
  .text.__vector_19
-                0x00000000000003b8       0x6e ./Timer0.o
-                0x00000000000003b8                __vector_19
+                0x000000000000032c       0x78 ./Timer0.o
+                0x000000000000032c                __vector_19
  .text.__vector_9
-                0x0000000000000426       0x6e ./Timer0.o
-                0x0000000000000426                __vector_9
- .text.TIMER1_setCallBackCompareMode
-                0x0000000000000494       0x26 ./timer1.o
-                0x0000000000000494                TIMER1_setCallBackCompareMode
- .text.TIMER1_setCallBackOverflowMode
-                0x00000000000004ba       0x26 ./timer1.o
-                0x00000000000004ba                TIMER1_setCallBackOverflowMode
- .text.TIMER1_init
-                0x00000000000004e0       0xdc ./timer1.o
-                0x00000000000004e0                TIMER1_init
- .text.TIMER1_start
-                0x00000000000005bc       0x34 ./timer1.o
-                0x00000000000005bc                TIMER1_start
- .text.TIMER1_setCompareValue
-                0x00000000000005f0       0x28 ./timer1.o
-                0x00000000000005f0                TIMER1_setCompareValue
- .text.TIMER1_stop
-                0x0000000000000618       0x46 ./timer1.o
-                0x0000000000000618                TIMER1_stop
- .text.__vector_6
-                0x000000000000065e       0x78 ./timer1.o
-                0x000000000000065e                __vector_6
- .text.__vector_8
-                0x00000000000006d6       0x6e ./timer1.o
-                0x00000000000006d6                __vector_8
+                0x00000000000003a4       0x6e ./Timer0.o
+                0x00000000000003a4                __vector_9
  .text.libgcc.mul
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
  .text.libgcc.div
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
- .text.libgcc   0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
+ .text.libgcc   0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
  .text.libgcc.prologue
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
  .text.libgcc.builtins
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
  .text.libgcc.fmul
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
  .text.libgcc.fixed
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
  .text.libgcc.mul
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.div
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
- .text.libgcc   0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
+ .text.libgcc   0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.prologue
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.builtins
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.fmul
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.fixed
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
  .text.libgcc.mul
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.div
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
- .text.libgcc   0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
+ .text.libgcc   0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.prologue
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.builtins
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.fmul
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
  .text.libgcc.fixed
-                0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
-                0x0000000000000744                . = ALIGN (0x2)
+                0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
+                0x0000000000000412                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000000000000744        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
-                0x0000000000000744                exit
-                0x0000000000000744                _exit
+ .fini9         0x0000000000000412        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
+                0x0000000000000412                exit
+                0x0000000000000412                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -338,17 +303,16 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000000000000744        0x4 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
+ .fini0         0x0000000000000412        0x4 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
  *(.fini0)
-                0x0000000000000748                _etext = .
+                0x0000000000000416                _etext = .
 
-.data           0x0000000000800060        0x8 load address 0x0000000000000748
+.data           0x0000000000800060        0x8 load address 0x0000000000000416
                 0x0000000000800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x0000000000800060        0x0 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/crtatmega16.o
  .data          0x0000000000800060        0x0 ./Application.o
  .data          0x0000000000800060        0x0 ./Timer0.o
- .data          0x0000000000800060        0x0 ./timer1.o
  .data          0x0000000000800060        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
  .data          0x0000000000800060        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
  .data          0x0000000000800060        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
@@ -362,13 +326,12 @@ END GROUP
                 0x0000000000800068                _edata = .
                 0x0000000000800068                PROVIDE (__data_end, .)
 
-.bss            0x0000000000800068        0xc
+.bss            0x0000000000800068        0x5
                 0x0000000000800068                PROVIDE (__bss_start, .)
  *(.bss)
  .bss           0x0000000000800068        0x0 /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr5/crtatmega16.o
  .bss           0x0000000000800068        0x0 ./Application.o
  .bss           0x0000000000800068        0x0 ./Timer0.o
- .bss           0x0000000000800068        0x0 ./timer1.o
  .bss           0x0000000000800068        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_exit.o)
  .bss           0x0000000000800068        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_copy_data.o)
  .bss           0x0000000000800068        0x0 /usr/lib/gcc/avr/5.4.0/avr5/libgcc.a(_clear_bss.o)
@@ -377,26 +340,18 @@ END GROUP
                 0x0000000000800068        0x2 ./Timer0.o
  .bss.g_T0OverflowInterruptFunc_ptr
                 0x000000000080006a        0x2 ./Timer0.o
- .bss.g_t0tick  0x000000000080006c        0x2 ./Timer0.o
+ .bss.g_t0tick  0x000000000080006c        0x1 ./Timer0.o
                 0x000000000080006c                g_t0tick
- .bss.g_T1CompareInterruptFunc_ptr
-                0x000000000080006e        0x2 ./timer1.o
- .bss.g_T1OverflowInterruptFunc_ptr
-                0x0000000000800070        0x2 ./timer1.o
- .bss.g_t1tick  0x0000000000800072        0x1 ./timer1.o
-                0x0000000000800072                g_t1tick
  *(COMMON)
- COMMON         0x0000000000800073        0x1 ./Application.o
-                0x0000000000800073                DELAY_DONE
-                0x0000000000800074                PROVIDE (__bss_end, .)
-                0x0000000000000748                __data_load_start = LOADADDR (.data)
-                0x0000000000000750                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000000000080006d                PROVIDE (__bss_end, .)
+                0x0000000000000416                __data_load_start = LOADADDR (.data)
+                0x000000000000041e                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x0000000000800074        0x0
+.noinit         0x000000000080006d        0x0
                 [!provide]                        PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                        PROVIDE (__noinit_end, .)
-                0x0000000000800074                _end = .
+                0x000000000080006d                _end = .
                 [!provide]                        PROVIDE (__heap_start, .)
 
 .eeprom         0x0000000000810000        0x0
@@ -418,17 +373,15 @@ END GROUP
 .user_signatures
  *(.user_signatures*)
 
-.stab           0x0000000000000000     0x12c0
+.stab           0x0000000000000000      0xc54
  *(.stab)
- .stab          0x0000000000000000      0x7bc ./Application.o
- .stab          0x00000000000007bc      0x5a0 ./Timer0.o
-                                        0x888 (size before relaxing)
- .stab          0x0000000000000d5c      0x564 ./timer1.o
-                                        0x834 (size before relaxing)
+ .stab          0x0000000000000000      0x6a8 ./Application.o
+ .stab          0x00000000000006a8      0x5ac ./Timer0.o
+                                        0x894 (size before relaxing)
 
-.stabstr        0x0000000000000000     0x14c5
+.stabstr        0x0000000000000000     0x1137
  *(.stabstr)
- .stabstr       0x0000000000000000     0x14c5 ./Application.o
+ .stabstr       0x0000000000000000     0x1137 ./Application.o
 
 .stab.excl
  *(.stab.excl)
@@ -447,7 +400,6 @@ END GROUP
  .comment       0x0000000000000000       0x11 ./Application.o
                                          0x12 (size before relaxing)
  .comment       0x0000000000000011       0x12 ./Timer0.o
- .comment       0x0000000000000011       0x12 ./timer1.o
 
 .note.gnu.avr.deviceinfo
                 0x0000000000000000       0x3c
@@ -520,5 +472,5 @@ END GROUP
 
 .debug_macro
  *(.debug_macro)
-OUTPUT(timers_exercise2.elf elf32-avr)
+OUTPUT(timer0_exercise1.elf elf32-avr)
 LOAD linker stubs
